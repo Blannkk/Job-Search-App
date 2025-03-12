@@ -15,12 +15,12 @@ import { schema } from "./app.schema.js";
 
 const bootstrap = async (app, express) => {
   //rate limiting
-  // app.use(
-  //   rateLimit({
-  //     windowMs: 3 * 60 * 1000, // 15 minutes
-  //     limit: 5, // limit each IP to 100 requests per window
-  //   })
-  // );
+  app.use(
+    rateLimit({
+      windowMs: 3 * 60 * 1000, // 15 minutes
+      limit: 5, // limit each IP to 100 requests per window
+    })
+  );
 
   //cors
   app.use(cors("*"));
