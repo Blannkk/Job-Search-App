@@ -7,8 +7,8 @@
     "node": "20.15.0"
   },
   "scripts": {
-    "start:dev": "node --watch --env-file=.env index.js",
     "start": "node index.js",
+    "start:dev": "node --watch --env-file=.env index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
