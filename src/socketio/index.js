@@ -1,19 +1,20 @@
 import { Server } from "socket.io";
+import { authSocket } from "./middleware/auth.socket.js";
+import { joinChat, sendMessage } from "./chat/index.js";
 
-let io;
+export let io;
 
 export const initSocket = (server) => {
-  io = new Server(server, {
+  const io = new Server(server, {
     cors: { origin: "*" },
   });
 
-  io.on("connection", (socket) => {
-    console.log(`🟢 New client connected: ${socket.id}`);
+  io.use(authSocket);
 
-    socket.on("disconnect", () => {
-      console.log(`🔴 Client disconnected: ${socket.id}`);
-    });
+  io.on("connection", (socket) => {
+    console.log(`Client connected: ${socket.id}`);
+
+    socket.on("sendMessage", sendMessage(socket, io));
+    socket.on("joinChat", joinChat(socket, io));
   });
 };
-
-export { io };
