@@ -56,7 +56,7 @@ const bootstrap = async (app, express) => {
   );
 
   //handle all routes in REST
-  app.use("/", (req, res) => res.send("Hello World!"));
+
   app.use("/auth", authRouter);
   app.use("/user", userRouter);
   app.use("/company", companyRouter);
