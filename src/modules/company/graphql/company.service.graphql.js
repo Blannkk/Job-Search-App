@@ -8,7 +8,9 @@ export const getCompanies = async (_, args, context) => {
   await isAuthenticated(context);
   isAuthorized(context, ["admin"]);
 
-  const companies = await Company.find()
+  const companies = await Company.find({
+    approvedByAdmin: true,
+  })
     .populate({
       path: "createdBy",
       select: "firstName lastName userName email _id",

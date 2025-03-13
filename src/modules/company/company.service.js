@@ -97,7 +97,10 @@ export const updateCompany = async (req, res, next) => {
     HRs,
   } = req.body;
 
-  const company = await Company.findOne({ createdBy: id });
+  const company = await Company.findOne({
+    createdBy: id,
+    approvedByAdmin: true,
+  });
   if (!company) {
     return next(
       new Error(messages.company.notFound, {
@@ -148,6 +151,7 @@ export const deleteCompany = async (req, res, next) => {
 
   const company = await Company.findOne({
     createdBy: id,
+    approvedByAdmin: true,
     isDeleted: false,
   });
   if (!company) {
@@ -195,6 +199,7 @@ export const searchCompany = async (req, res, next) => {
   }
   const companies = await Company.find({
     companyName: { $regex: name, $options: "i" },
+    approvedByAdmin: true,
     isDeleted: false,
   });
   if (!companies || companies.length === 0) {
@@ -219,7 +224,10 @@ export const uploadCompanyLogoOrCover = async (
   const { id } = req.user;
   const { pic_type } = req.params;
 
-  const company = await Company.findOne({ createdBy: id });
+  const company = await Company.findOne({
+    createdBy: id,
+    approvedByAdmin: true,
+  });
   if (!company) {
     return next(
       new Error(messages.company.notFound, { cause: 404 })
@@ -265,7 +273,10 @@ export const uploadCompanyLogoOrCover = async (
 export const deleteLogoOrCover = async (req, res, next) => {
   const { id } = req.user;
 
-  const company = await Company.findOne({ createdBy: id });
+  const company = await Company.findOne({
+    createdBy: id,
+    approvedByAdmin: true,
+  });
   if (!company) {
     return next(
       new Error(messages.company.notFound, { cause: 404 })
