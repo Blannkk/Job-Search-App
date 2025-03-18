@@ -56,7 +56,14 @@ const bootstrap = async (app, express) => {
   );
 
   //handle all routes in REST
-  app.get("/", (req, res) => res.send("Hello World!"));
+  app.get("/", (req, res) => {
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Welcome to Jobify",
+      });
+  });
   app.use("/auth", authRouter);
   app.use("/user", userRouter);
   app.use("/company", companyRouter);
